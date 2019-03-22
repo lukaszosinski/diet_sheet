@@ -28,7 +28,6 @@ public class Product {
     private Set<Meal> meals = new HashSet<>();
 
     public Product() {
-        id = 0;
     }
 
     public Product(String name, Nutrients nutrients, int kcal) {
