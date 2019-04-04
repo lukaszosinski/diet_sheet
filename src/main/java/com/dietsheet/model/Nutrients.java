@@ -12,7 +12,6 @@ public class Nutrients {
     @Id
     @Column(name = "nutrients_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private long id;
 
     @Column(name = "proteins")

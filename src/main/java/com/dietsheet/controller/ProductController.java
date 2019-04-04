@@ -5,12 +5,10 @@ package com.dietsheet.controller;
 import com.dietsheet.model.Product;
 import com.dietsheet.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -39,17 +37,14 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/product/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createProduct(@RequestBody Product product, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
 
         if (productService.isExist(product)) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         productService.save(product);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/product/{id}").buildAndExpand(product.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.PUT)

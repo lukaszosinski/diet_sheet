@@ -2,8 +2,7 @@ package com.dietsheet.model;
 
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "product")
@@ -17,15 +16,15 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "nutrients_id", referencedColumnName = "nutrients_id", unique = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(
+            name = "nutrients_id",
+            referencedColumnName = "nutrients_id",
+            unique = true)
     private Nutrients nutrients;
 
     @Column(name = "kcal")
     private int kcal;
-
-    @ManyToMany(mappedBy = "products")
-    private Set<Meal> meals = new HashSet<>();
 
     public Product() {
     }

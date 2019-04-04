@@ -16,15 +16,11 @@ public class Meal {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE},
+    @OneToMany(
+            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    @JoinTable(name = "meal_product",
-            joinColumns = @JoinColumn(name = "meal_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private Set<Product> products = new HashSet<>();
+    @JoinColumn(name = "meal_id")
+    private Set<Ingredient> ingredients;
 
     @ManyToMany(mappedBy = "meals")
     private Set<Day> days = new HashSet<>();
@@ -32,9 +28,9 @@ public class Meal {
     public Meal() {
     }
 
-    public Meal(String name, Set<Product> products) {
+    public Meal(String name, Set<Ingredient> ingredients) {
         this.name = name;
-        this.products = products;
+        this.ingredients = ingredients;
     }
 
 
@@ -54,11 +50,11 @@ public class Meal {
         this.name = name;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

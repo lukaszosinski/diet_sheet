@@ -17,7 +17,6 @@ public class Day {
 
 
     @Column(name = "date", nullable = false)
-
     private LocalDate date;
 
     @ManyToMany(cascade = {

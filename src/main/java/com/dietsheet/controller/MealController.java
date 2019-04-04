@@ -39,17 +39,13 @@ public class MealController {
     }
 
     @RequestMapping(value = "/meal/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createMeal(@RequestBody Meal meal, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Meal> createMeal(@RequestBody Meal meal, UriComponentsBuilder ucBuilder) {
 
         if (mealService.isExist(meal)) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-
         mealService.save(meal);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/meal/{id}").buildAndExpand(meal.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(meal, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/meal/{id}", method = RequestMethod.PUT)
@@ -62,7 +58,7 @@ public class MealController {
         }
 
         mealToUpdate.setName(meal.getName());
-        mealToUpdate.setProducts(meal.getProducts());
+        mealToUpdate.setIngredients(meal.getIngredients());
 
         mealService.update(mealToUpdate);
         return new ResponseEntity<>(mealToUpdate, HttpStatus.OK);
