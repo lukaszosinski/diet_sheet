@@ -29,16 +29,9 @@ public class Day {
     )
     private Set<Meal> meals = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "week_id")
-    private Week week;
-
     public Day() {
-    }
-
-    public Day(Week week, int dayNumberInWeek) {
-        this.week = week;
-        this.date = week.getStartDayDate().plusDays(dayNumberInWeek - 1);
+        //TODO Decide what to do with date and find right way to set it.
+        this.date = LocalDate.now();
     }
 
     public long getId() {
@@ -48,7 +41,6 @@ public class Day {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public LocalDate getDate() {
         return date;
