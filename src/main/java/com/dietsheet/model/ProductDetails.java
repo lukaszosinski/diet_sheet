@@ -5,14 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "nutrients")
-public class Nutrients {
+@Table(name = "product_details")
+public class ProductDetails {
 
 
     @Id
-    @Column(name = "nutrients_id")
+    @Column(name = "product_details_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(name = "kcal")
+    private int kcal;
 
     @Column(name = "proteins")
     private int proteins;
@@ -26,10 +29,11 @@ public class Nutrients {
     @Column(name = "roughage")
     private int roughage;
 
-    public Nutrients() {
+    public ProductDetails() {
     }
 
-    public Nutrients(int proteins, int carbs, int fat, int roughage) {
+    public ProductDetails(int kcal, int proteins, int carbs, int fat, int roughage) {
+        this.kcal = kcal;
         this.proteins = proteins;
         this.carbs = carbs;
         this.fat = fat;
@@ -42,6 +46,14 @@ public class Nutrients {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getKcal() {
+        return kcal;
+    }
+
+    public void setKcal(int kcal) {
+        this.kcal = kcal;
     }
 
     public int getProteins() {

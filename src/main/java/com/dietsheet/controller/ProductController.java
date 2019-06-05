@@ -57,8 +57,7 @@ public class ProductController {
         }
 
         productToUpdate.setName(product.getName());
-        productToUpdate.setNutrients(product.getNutrients());
-        productToUpdate.setKcal(product.getKcal());
+        productToUpdate.setProductDetails(product.getProductDetails());
 
         productService.update(productToUpdate);
         return new ResponseEntity<>(productToUpdate, HttpStatus.OK);
