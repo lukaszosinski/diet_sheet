@@ -18,24 +18,19 @@ public class Product {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(
-            name = "nutrients_id",
-            referencedColumnName = "nutrients_id",
+            name = "product_details_id",
+            referencedColumnName = "product_details_id",
             unique = true)
-    private Nutrients nutrients;
-
-    @Column(name = "kcal")
-    private int kcal;
+    private ProductDetails productDetails;
 
     public Product() {
     }
 
-    public Product(String name, Nutrients nutrients, int kcal) {
+    public Product(String name, ProductDetails productDetails) {
         this.name = name;
-        this.nutrients = nutrients;
-        this.kcal = kcal;
+        this.productDetails = productDetails;
     }
-
-
+    
     public long getId() {
         return id;
     }
@@ -52,19 +47,11 @@ public class Product {
         this.name = name;
     }
 
-    public Nutrients getNutrients() {
-        return nutrients;
+    public ProductDetails getProductDetails() {
+        return productDetails;
     }
 
-    public void setNutrients(Nutrients nutrients) {
-        this.nutrients = nutrients;
-    }
-
-    public int getKcal() {
-        return kcal;
-    }
-
-    public void setKcal(int kcal) {
-        this.kcal = kcal;
+    public void setProductDetails(ProductDetails productDetails) {
+        this.productDetails = productDetails;
     }
 }
