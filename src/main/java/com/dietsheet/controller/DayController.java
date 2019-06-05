@@ -29,6 +29,16 @@ public class DayController {
         return new ResponseEntity<>(days, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/day/", method = RequestMethod.POST)
+    public ResponseEntity<Day> createMeal(@RequestBody Day day) {
+
+        if (dayService.isExist(day)) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        dayService.save(day);
+        return new ResponseEntity<>(day, HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = "/day/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Day> getDay(@PathVariable("id") long id) {
         Day day = dayService.findById(id);
@@ -40,16 +50,13 @@ public class DayController {
 
     @RequestMapping(value = "/day/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Day> updateDay(@PathVariable("id") long id, @RequestBody Day day) {
-
         Day dayToUpdate = dayService.findById(id);
-
 
         if (dayToUpdate == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         dayToUpdate.setMeals(day.getMeals());
-
         dayService.update(dayToUpdate);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
