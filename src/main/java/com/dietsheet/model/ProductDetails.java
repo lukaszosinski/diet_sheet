@@ -1,7 +1,4 @@
 package com.dietsheet.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity

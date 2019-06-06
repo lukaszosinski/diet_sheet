@@ -2,9 +2,8 @@ package com.dietsheet.service;
 
 import com.dietsheet.DAO.DayDAO;
 import com.dietsheet.model.Day;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service("dayService")
@@ -15,7 +14,9 @@ public class DayServiceImpl implements Service<Day> {
 
     @Override
     public Day findById(long id) {
-        return dayDAO.get(id);
+        Day day = dayDAO.get(id);
+        Hibernate.initialize(day.getMeals());
+        return day;
     }
 
     @Override
