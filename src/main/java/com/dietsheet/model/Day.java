@@ -1,7 +1,11 @@
 package com.dietsheet.model;
 
 
+import com.dietsheet.serializer.LocalDateDeserializer;
+import com.dietsheet.serializer.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,6 +24,8 @@ public class Day {
 
 
     @Column(name = "date", nullable = false)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
     @ManyToMany(cascade = {

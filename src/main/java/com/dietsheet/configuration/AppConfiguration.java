@@ -23,20 +23,15 @@ import java.util.List;
 public class AppConfiguration implements WebMvcConfigurer {
     public MappingJackson2HttpMessageConverter jacksonMessageConverter() {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-
         ObjectMapper mapper = new ObjectMapper();
-        //Registering Hibernate4Module to support lazy objects
         mapper.registerModule(new Hibernate5Module());
         messageConverter.setObjectMapper(mapper);
         return messageConverter;
-
     }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        //Here we add our custom-configured HttpMessageConverter
         converters.add(jacksonMessageConverter());
-        //super.configureMessageConverters(converters);
     }
 
 
