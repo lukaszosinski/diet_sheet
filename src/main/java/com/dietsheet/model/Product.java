@@ -1,11 +1,14 @@
 package com.dietsheet.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "product")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
 
     @Id
@@ -16,7 +19,10 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade =
+            CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     @JoinColumn(
             name = "product_details_id",
             referencedColumnName = "product_details_id",

@@ -1,6 +1,8 @@
 package com.dietsheet.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "day")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Day {
 
     @Id
@@ -22,7 +25,7 @@ public class Day {
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinTable(name = "day_meal",
             joinColumns = @JoinColumn(name = "day_id"),
             inverseJoinColumns = @JoinColumn(name = "meal_id")

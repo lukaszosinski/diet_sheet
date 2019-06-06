@@ -1,10 +1,15 @@
 package com.dietsheet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "meal")
 public class Meal {
 
@@ -18,8 +23,10 @@ public class Meal {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY
+            )
     @JoinColumn(name = "meal_id")
+    @Fetch(FetchMode.SELECT)
     private Set<Ingredient> ingredients;
 
     @ManyToMany(mappedBy = "meals")
