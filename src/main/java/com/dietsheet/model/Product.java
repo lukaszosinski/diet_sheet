@@ -60,4 +60,9 @@ public class Product {
     public void setProductDetails(ProductDetails productDetails) {
         this.productDetails = productDetails;
     }
+
+    public void updateProductDetails(ProductDetails newProductDetails) {
+        newProductDetails.setId(this.productDetails.getId());
+        this.productDetails = newProductDetails;
+    }
 }

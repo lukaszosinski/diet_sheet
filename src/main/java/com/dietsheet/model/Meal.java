@@ -1,8 +1,11 @@
 package com.dietsheet.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,10 +23,11 @@ public class Meal {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
             )
     @JoinColumn(name = "meal_id")
-    private Set<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
 
     @ManyToMany(mappedBy = "meals")
     private Set<Day> days = new HashSet<>();
@@ -31,7 +35,7 @@ public class Meal {
     public Meal() {
     }
 
-    public Meal(String name, Set<Ingredient> ingredients) {
+    public Meal(String name, List<Ingredient> ingredients) {
         this.name = name;
         this.ingredients = ingredients;
     }
@@ -53,11 +57,16 @@ public class Meal {
         this.name = name;
     }
 
-    public Set<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public void updateIngredients(List<Ingredient> newIngredients) {
+        this.ingredients.clear();
+        this.ingredients.addAll(newIngredients);
+}
 }

@@ -67,4 +67,9 @@ public class Day {
         this.meals = meals;
     }
 
+    public void updateMeals(Set<Meal> newMeals) {
+        this.meals.clear();
+        this.meals.addAll(newMeals);
+    }
+
 }

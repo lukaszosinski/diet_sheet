@@ -56,7 +56,7 @@ public class DayController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        dayToUpdate.setMeals(day.getMeals());
+        dayToUpdate.updateMeals(day.getMeals());
         dayService.update(dayToUpdate);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

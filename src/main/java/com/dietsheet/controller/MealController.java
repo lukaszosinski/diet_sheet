@@ -58,10 +58,10 @@ public class MealController {
         }
 
         mealToUpdate.setName(meal.getName());
-        mealToUpdate.setIngredients(meal.getIngredients());
+        mealToUpdate.updateIngredients(meal.getIngredients());
 
         mealService.update(mealToUpdate);
-        return new ResponseEntity<>(mealToUpdate, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/meal/", method = RequestMethod.DELETE)
