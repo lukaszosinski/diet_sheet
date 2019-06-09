@@ -2,6 +2,7 @@ package com.dietsheet.service;
 
 import com.dietsheet.DAO.MealDAO;
 import com.dietsheet.model.Meal;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -14,7 +15,12 @@ public class MealServiceImpl implements Service<Meal> {
 
     @Override
     public Meal findById(long id) {
-        return mealDAO.get(id);
+        Meal meal = mealDAO.get(id);
+        Hibernate.initialize(meal.getIngredients());
+        meal.getIngredients().forEach(ingredient ->
+            Hibernate.initialize(ingredient.getProduct())
+        );
+        return meal;
     }
 
     @Override

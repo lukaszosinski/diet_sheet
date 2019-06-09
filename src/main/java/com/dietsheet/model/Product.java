@@ -1,11 +1,14 @@
 package com.dietsheet.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "product")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
 
     @Id
@@ -16,26 +19,24 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade =
+            CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "nutrients_id",
-            referencedColumnName = "nutrients_id",
+            name = "product_details_id",
+            referencedColumnName = "product_details_id",
             unique = true)
-    private Nutrients nutrients;
-
-    @Column(name = "kcal")
-    private int kcal;
+    private ProductDetails productDetails;
 
     public Product() {
     }
 
-    public Product(String name, Nutrients nutrients, int kcal) {
+    public Product(String name, ProductDetails productDetails) {
         this.name = name;
-        this.nutrients = nutrients;
-        this.kcal = kcal;
+        this.productDetails = productDetails;
     }
-
-
+    
     public long getId() {
         return id;
     }
@@ -52,19 +53,16 @@ public class Product {
         this.name = name;
     }
 
-    public Nutrients getNutrients() {
-        return nutrients;
+    public ProductDetails getProductDetails() {
+        return productDetails;
     }
 
-    public void setNutrients(Nutrients nutrients) {
-        this.nutrients = nutrients;
+    public void setProductDetails(ProductDetails productDetails) {
+        this.productDetails = productDetails;
     }
 
-    public int getKcal() {
-        return kcal;
-    }
-
-    public void setKcal(int kcal) {
-        this.kcal = kcal;
+    public void updateProductDetails(ProductDetails newProductDetails) {
+        newProductDetails.setId(this.productDetails.getId());
+        this.productDetails = newProductDetails;
     }
 }

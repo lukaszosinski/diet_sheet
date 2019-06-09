@@ -1,9 +1,12 @@
 package com.dietsheet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ingredient")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Ingredient {
 
     @Id
@@ -11,7 +14,7 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="product_id")
     private Product product;
 
@@ -49,12 +52,4 @@ public class Ingredient {
     public void setAmount(int amount) {
         this.amount = amount;
     }
-
-//    public Meal getMeal() {
-//        return meal;
-//    }
-//
-//    public void setMeal(Meal meal) {
-//        this.meal = meal;
-//    }
 }

@@ -2,6 +2,7 @@ package com.dietsheet.service;
 
 import com.dietsheet.DAO.ProductDAO;
 import com.dietsheet.model.Product;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -14,7 +15,9 @@ public class ProductServiceImpl implements Service<Product> {
 
     @Override
     public Product findById(long id) {
-        return productDAO.get(id);
+        Product product = productDAO.get(id);
+        Hibernate.initialize(product.getProductDetails());
+        return product;
     }
 
     @Override

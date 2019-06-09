@@ -1,6 +1,12 @@
 package com.dietsheet.model;
 
 
+import com.dietsheet.serializer.LocalDateDeserializer;
+import com.dietsheet.serializer.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -8,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "day")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Day {
 
     @Id
@@ -17,28 +24,23 @@ public class Day {
 
 
     @Column(name = "date", nullable = false)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinTable(name = "day_meal",
             joinColumns = @JoinColumn(name = "day_id"),
             inverseJoinColumns = @JoinColumn(name = "meal_id")
     )
     private Set<Meal> meals = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "week_id")
-    private Week week;
-
     public Day() {
-    }
-
-    public Day(Week week, int dayNumberInWeek) {
-        this.week = week;
-        this.date = week.getStartDayDate().plusDays(dayNumberInWeek - 1);
+        //TODO Decide what to do with date and find right way to set it.
+        this.date = LocalDate.now();
     }
 
     public long getId() {
@@ -48,7 +50,6 @@ public class Day {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public LocalDate getDate() {
         return date;
@@ -64,6 +65,11 @@ public class Day {
 
     public void setMeals(Set<Meal> meals) {
         this.meals = meals;
+    }
+
+    public void updateMeals(Set<Meal> newMeals) {
+        this.meals.clear();
+        this.meals.addAll(newMeals);
     }
 
 }

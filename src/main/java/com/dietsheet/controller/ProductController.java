@@ -57,11 +57,10 @@ public class ProductController {
         }
 
         productToUpdate.setName(product.getName());
-        productToUpdate.setNutrients(product.getNutrients());
-        productToUpdate.setKcal(product.getKcal());
+        productToUpdate.updateProductDetails(product.getProductDetails());
 
         productService.update(productToUpdate);
-        return new ResponseEntity<>(productToUpdate, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/product/", method = RequestMethod.DELETE)
