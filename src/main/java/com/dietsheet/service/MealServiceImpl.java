@@ -16,6 +16,9 @@ public class MealServiceImpl implements Service<Meal> {
     @Override
     public Meal findById(long id) {
         Meal meal = mealDAO.get(id);
+        if(meal == null) {
+            return null;
+        }
         Hibernate.initialize(meal.getIngredients());
         meal.getIngredients().forEach(ingredient ->
             Hibernate.initialize(ingredient.getProduct())

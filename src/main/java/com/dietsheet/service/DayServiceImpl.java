@@ -15,6 +15,9 @@ public class DayServiceImpl implements Service<Day> {
     @Override
     public Day findById(long id) {
         Day day = dayDAO.get(id);
+        if(day == null) {
+            return null;
+        }
         Hibernate.initialize(day.getMeals());
         return day;
     }
