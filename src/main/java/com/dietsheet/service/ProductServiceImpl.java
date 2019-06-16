@@ -16,6 +16,9 @@ public class ProductServiceImpl implements Service<Product> {
     @Override
     public Product findById(long id) {
         Product product = productDAO.get(id);
+        if(product == null) {
+            return null;
+        }
         Hibernate.initialize(product.getProductDetails());
         return product;
     }

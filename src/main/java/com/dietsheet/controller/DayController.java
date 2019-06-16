@@ -62,4 +62,14 @@ public class DayController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @RequestMapping(value = "/day/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Day> deleteMeal(@PathVariable("id") long id) {
+        Day day = dayService.findById(id);
+        if (day == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        dayService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
